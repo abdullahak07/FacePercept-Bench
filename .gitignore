@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.cache/
+cache/*
+!cache/.gitkeep
+data/images/
+data/manifest.csv
+data/benchmark.csv
+results/predictions.csv
+results/*.json
+logs/
+hftoken.txt
+.env
+.DS_Store
