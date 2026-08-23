@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "facepercept-bench"
+version = "0.1.0"
+description = "Computational benchmark for real vs synthetic face representations"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "scipy>=1.11",
+  "scikit-learn>=1.3",
+  "matplotlib>=3.8",
+  "Pillow>=10.0",
+  "PyYAML>=6.0",
+  "tqdm>=4.66"
+]
+
+[project.optional-dependencies]
+models = [
+  "torch",
+  "torchvision",
+  "transformers",
+  "datasets",
+  "accelerate",
+  "huggingface_hub",
+  "sentencepiece",
+  "protobuf"
+]
+extra = ["pyarrow"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
