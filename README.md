@@ -12,7 +12,7 @@ We evaluated **500 face images** (250 real, 250 synthetic). Across three indepen
 | DINOv2 | 0.862 | -0.0279 | [-0.0490, -0.0085] |
 | SigLIP | 0.868 | -0.0497 | [-0.0746, -0.0302] |
 
-![Cross-encoder centrality result](figures/final_real_centroid_robustness.png)
+![Cross-encoder centrality result](results/final_real_centroid_robustness.png)
 
 ## Question this raises
 
