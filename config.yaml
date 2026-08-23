@@ -1,0 +1,56 @@
+seed: 1234
+n_per_class: 250
+test_fraction: 0.4
+device: auto
+primary_prompt: binary_forced_choice
+bootstrap:
+  n_boot: 2000
+
+datasets:
+  real:
+    - repo_id: TheKernel01/140k-Real-and-Fake-Faces
+      split: train
+      image_column: image
+      label_column: label
+      keep_labels: [0]
+  synthetic:
+    - repo_id: TheKernel01/140k-Real-and-Fake-Faces
+      split: train
+      image_column: image
+      label_column: label
+      keep_labels: [1]
+
+models:
+  dummy:
+    backend: dummy
+  qwen2_5_vl_3b:
+    backend: hf
+    hf_id: Qwen/Qwen2.5-VL-3B-Instruct
+    kind: qwen2_5_vl
+    max_new_tokens: 8
+    confidence_from_logits: true
+
+default_models:
+  - dummy
+
+embeddings:
+  dummy:
+    backend: dummy
+    grid: 8
+  clip_vit_b32:
+    backend: hf
+    hf_id: openai/clip-vit-base-patch32
+    kind: clip
+    batch_size: 32
+  dinov2_base:
+    backend: hf
+    hf_id: facebook/dinov2-base
+    kind: dinov2
+    batch_size: 16
+  siglip_base:
+    backend: hf
+    hf_id: google/siglip-base-patch16-224
+    kind: siglip
+    batch_size: 32
+
+default_embedding: dummy
