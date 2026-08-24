@@ -53,7 +53,7 @@ python run_all.py --model qwen2_5_vl_3b --embedding-backend clip_vit_b32 --n-per
 
 ## Web demo
 
-The repository includes a static `index.html` and `vercel.json`, so it can be deployed directly on Vercel with the repository root as the project root.
+Interactive web demo is available at https://face-percept-bench.vercel.app/
 
 ## Scope
 
