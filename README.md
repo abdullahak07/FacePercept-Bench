@@ -1,10 +1,10 @@
 # FacePercept-Bench
 
-A reproducible computational benchmark for comparing real and AI-generated faces across modern vision and vision-language models.
+A small computational experiment comparing real and AI-generated faces using current vision and vision-language models.
 
-## Key finding
+## Main result
 
-We evaluated **500 face images** (250 real, 250 synthetic). Across three independent vision encoders, synthetic faces were consistently closer than real faces to a reference centroid estimated only from real faces in the training split, while the two groups remained strongly separable in representation space.
+I ran the analysis on 500 faces (250 real and 250 synthetic). For CLIP, DINOv2 and SigLIP, synthetic faces were closer to a reference centroid computed from real faces in the training split. At the same time, real and synthetic faces were still fairly easy to separate with a linear probe.
 
 | Encoder | Linear-probe balanced accuracy | Synthetic - Real centroid distance | 95% CI |
 |---|---:|---:|---:|
@@ -14,28 +14,26 @@ We evaluated **500 face images** (250 real, 250 synthetic). Across three indepen
 
 ![Cross-encoder centrality result](results/final_real_centroid_robustness.png)
 
-## Question this raises
+This made me interested in a simple question: does this kind of centrality in vision-model feature space have any relationship to perceptual averageness or the hyper-realism effects reported for AI-generated faces in humans?
 
-**Does representation-space centrality in modern vision models relate in any meaningful way to the perceptual averageness or hyper-realism effects reported for AI-generated faces in humans?**
+The representation analysis is only a computational comparison. I am not treating model feature space as equivalent to human perception.
 
-This demo does not assume that model representations are equivalent to human perception. It provides a reproducible computational starting point for testing that relationship.
+## VLM result
 
-## VLM behaviour
+I also tested Qwen2.5-VL-3B. It predicted REAL for almost everything: 98.4% of synthetic faces and 98.0% of real faces. Balanced accuracy was 0.498 and the 95% CI for the difference was [-0.020, 0.028]. I therefore treat this as a near-constant response rather than evidence of a hyper-realism effect.
 
-Qwen2.5-VL-3B did **not** provide evidence for a machine-side hyper-realism effect in this benchmark. It predicted REAL for both classes at nearly the same rate (synthetic 0.984; real 0.980), yielding balanced accuracy 0.498 and a rate-difference 95% CI of [-0.020, +0.028]. We treat this as a near-constant-response failure mode rather than a positive effect.
+## Included
 
-## What the project includes
-
-- automatic acquisition of real and synthetic face data
-- balanced benchmark construction and deterministic splits
+- real/synthetic face dataset loading and balancing
+- fixed train/test splits
 - VLM classification
-- CLIP, DINOv2 and SigLIP representation analysis
-- held-out real-face reference-centroid analysis
-- linear-probe separability evaluation
+- CLIP, DINOv2 and SigLIP embeddings
+- distance to a real-face training centroid
+- linear-probe evaluation
 - bootstrap confidence intervals and effect sizes
-- cached outputs, figures and reproducibility metadata
+- saved results and figures
 
-## Quick start
+## Running it
 
 ```bash
 python -m venv .venv
@@ -45,16 +43,16 @@ pip install -e ".[models,extra]"
 python run_all.py --quick
 ```
 
-For a real run:
+For the full model run:
 
 ```bash
 python run_all.py --model qwen2_5_vl_3b --embedding-backend clip_vit_b32 --n-per-class 250
 ```
 
-## Web demo
+## Demo
 
-Interactive web demo is available at https://face-percept-bench.vercel.app/
+https://face-percept-bench.vercel.app/
 
 ## Scope
 
-This project studies model behaviour and representation geometry. It does not perform identity recognition, demographic inference, attractiveness scoring, personality inference, or other sensitive face analysis.
+This project is about real-vs-synthetic classification and representation geometry. It does not do face identification, demographic inference, attractiveness/personality scoring, or other sensitive face analysis.
