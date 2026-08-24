@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 DATASET_ID = "TheKernel01/140k-Real-and-Fake-Faces"
 
 
