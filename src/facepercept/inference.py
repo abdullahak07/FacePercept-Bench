@@ -1,10 +1,9 @@
-from __future__ import annotations
+def parse_binary_prediction(text):
+    text = text.strip().upper()
 
-
-def parse_binary_prediction(text: str):
-    t = text.strip().upper()
-    if t.startswith("REAL"):
+    if text.startswith("REAL"):
         return "real"
-    if t.startswith("SYNTHETIC") or t.startswith("FAKE") or t.startswith("AI"):
+    if text.startswith(("SYNTHETIC", "FAKE", "AI")):
         return "synthetic"
+
     return None
