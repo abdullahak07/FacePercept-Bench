@@ -1,16 +1,11 @@
-from __future__ import annotations
-
 import argparse
 import json
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
 
-
-def parse_args():
-    p = argparse.ArgumentParser(description="FacePercept-Bench entry point")
-    p.add_argument("--quick", action="store_true", help="Run a lightweight wiring check")
+def args():
+    p = argparse.ArgumentParser()
+    p.add_argument("--quick", action="store_true")
     p.add_argument("--model", default="qwen2_5_vl_3b")
     p.add_argument("--embedding-backend", default="clip_vit_b32")
     p.add_argument("--n-per-class", type=int, default=250)
@@ -19,21 +14,23 @@ def parse_args():
 
 
 def main():
-    args = parse_args()
+    a = args()
     print("FacePercept-Bench")
-    print(f"model={args.model} embedding={args.embedding_backend} n_per_class={args.n_per_class}")
-    if args.quick:
+    print("model:", a.model)
+    print("encoder:", a.embedding_backend)
+    print("images/class:", a.n_per_class)
+
+    if a.quick:
         Path("results").mkdir(exist_ok=True)
-        payload = {
+        out = {
             "mode": "quick",
-            "note": "Lightweight repository wiring check. Use the full local pipeline for scientific runs.",
+            "note": "wiring check only - use the full scripts for experiment runs",
         }
-        Path("results/quick_check.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
-        print("Quick check complete: results/quick_check.json")
+        Path("results/quick_check.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+        print("quick check done")
         return
 
-    print("This public entry point documents the validated benchmark interface.")
-    print("For full VLM/encoder execution, use the research modules under src/facepercept and the scripts directory.")
+    print("full experiment scripts are under scripts/ and src/facepercept/")
 
 
 if __name__ == "__main__":
